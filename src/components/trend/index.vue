@@ -1,14 +1,7 @@
 <template>
   <span :class="containerCls">
     <span :class="iconCls">
-      <svg
-        v-if="type === 'down'"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg v-if="type === 'down'" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M11.5 8L8 11.5L4.5 8" stroke="currentColor" stroke-width="1.5" />
         <path d="M8 11L8 4" stroke="currentColor" stroke-width="1.5" />
       </svg>
@@ -21,7 +14,7 @@
   </span>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const props = defineProps({
   type: String,
@@ -30,10 +23,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-});
+})
 
 const containerCls = computed(() => {
-  const { isReverseColor, type } = props;
+  const { isReverseColor, type } = props
   return [
     'trend-container',
     {
@@ -41,10 +34,10 @@ const containerCls = computed(() => {
       'trend-container__up': !isReverseColor && type === 'up',
       'trend-container__down': !isReverseColor && type === 'down',
     },
-  ];
-});
+  ]
+})
 
-const iconCls = computed(() => ['trend-icon-container']);
+const iconCls = computed(() => ['trend-icon-container'])
 </script>
 
 <style lang="less" scoped>

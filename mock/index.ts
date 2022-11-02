@@ -1,5 +1,5 @@
-import { MockMethod } from 'vite-plugin-mock';
-import Mock from 'mockjs';
+import { MockMethod } from 'vite-plugin-mock'
+import Mock from 'mockjs'
 
 export default [
   {
@@ -120,13 +120,7 @@ export default [
               adminPhone: '+86 13587609955',
               updateTime: '2020-05-30 @date("HH:mm:ss")',
               'adminName|1': ['顾娟	', '常刚', '郑洋'],
-              'name|1': [
-                '沧州市办公用品采购项目',
-                '红河哈尼族彝族自治州办公用品采购项目	',
-                '铜川市办公用品采购项目',
-                '陇南市办公用品采购项目	',
-                '六安市办公用品采购项目	 ',
-              ],
+              'name|1': ['沧州市办公用品采购项目', '红河哈尼族彝族自治州办公用品采购项目	', '铜川市办公用品采购项目', '陇南市办公用品采购项目	', '六安市办公用品采购项目	 '],
             },
           ],
         }),
@@ -144,4 +138,4 @@ export default [
       },
     },
   },
-] as MockMethod[];
+] as MockMethod[]

@@ -4,9 +4,7 @@
       <div class="header-msg">
         <div class="header-msg-top">
           <p>通知</p>
-          <t-button v-if="unreadMsg.length > 0" class="clear-btn" variant="text" theme="primary" @click="setRead('all')"
-            >清空</t-button
-          >
+          <t-button v-if="unreadMsg.length > 0" class="clear-btn" variant="text" theme="primary" @click="setRead('all')">清空</t-button>
         </div>
         <t-list v-if="unreadMsg.length > 0" class="narrow-scrollbar" :split="true">
           <t-list-item v-for="(item, index) in unreadMsg" :key="index">
@@ -26,14 +24,7 @@
           <p>暂无通知</p>
         </div>
         <div class="header-msg-bottom">
-          <t-button
-            v-if="unreadMsg.length > 0"
-            class="header-msg-bottom-link"
-            variant="text"
-            theme="primary"
-            @click="goDetail"
-            >查看全部</t-button
-          >
+          <t-button v-if="unreadMsg.length > 0" class="header-msg-bottom-link" variant="text" theme="primary" @click="goDetail">查看全部</t-button>
         </div>
       </div>
     </template>
@@ -46,34 +37,34 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { storeToRefs } from 'pinia';
-import { useNotificationStore } from '@/store';
-import { NotificationItem } from '@/types/interface';
+import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useNotificationStore } from '@/store'
+import { NotificationItem } from '@/types/interface'
 
-const router = useRouter();
-const store = useNotificationStore();
-const { msgData, unreadMsg } = storeToRefs(store);
+const router = useRouter()
+const store = useNotificationStore()
+const { msgData, unreadMsg } = storeToRefs(store)
 
 const setRead = (type: string, item?: NotificationItem) => {
-  const changeMsg = msgData.value;
+  const changeMsg = msgData.value
   if (type === 'all') {
-    changeMsg.forEach((e) => {
-      e.status = false;
-    });
+    changeMsg.forEach(e => {
+      e.status = false
+    })
   } else {
-    changeMsg.forEach((e) => {
+    changeMsg.forEach(e => {
       if (e.id === item?.id) {
-        e.status = false;
+        e.status = false
       }
-    });
+    })
   }
-  store.setMsgData(changeMsg);
-};
+  store.setMsgData(changeMsg)
+}
 
 const goDetail = () => {
-  router.push('/detail/secondary');
-};
+  router.push('/detail/secondary')
+}
 </script>
 
 <style lang="less" scoped>

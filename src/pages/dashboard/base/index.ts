@@ -1,11 +1,11 @@
-import dayjs from 'dayjs';
-import { TChartColor } from '@/config/color';
-import { getChartListColor } from '@/utils/color';
-import { getRandomArray } from '@/utils/charts';
+import dayjs from 'dayjs'
+import { TChartColor } from '@/config/color'
+import { getChartListColor } from '@/utils/color'
+import { getRandomArray } from '@/utils/charts'
 
 /** 首页 dashboard 折线图 */
 export function constructInitDashboardDataset(type: string) {
-  const dateArray: Array<string> = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+  const dateArray: Array<string> = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
   const datasetAxis = {
     xAxis: {
       type: 'category',
@@ -22,7 +22,7 @@ export function constructInitDashboardDataset(type: string) {
       right: 0,
       bottom: 0,
     },
-  };
+  }
 
   if (type === 'line') {
     const lineDataset = {
@@ -46,8 +46,8 @@ export function constructInitDashboardDataset(type: string) {
           },
         },
       ],
-    };
-    return lineDataset;
+    }
+    return lineDataset
   }
   const barDataset = {
     ...datasetAxis,
@@ -82,38 +82,34 @@ export function constructInitDashboardDataset(type: string) {
         barWidth: 9,
       },
     ],
-  };
-  return barDataset;
+  }
+  return barDataset
 }
 
 /** 柱状图数据源 */
-export function constructInitDataset({
-  dateTime = [],
-  placeholderColor,
-  borderColor,
-}: { dateTime: Array<string> } & TChartColor) {
+export function constructInitDataset({ dateTime = [], placeholderColor, borderColor }: { dateTime: Array<string> } & TChartColor) {
   // const dataset: Array<Array<string>> = [['时间'], ['入库'], ['出库']];
-  const divideNum = 10;
-  const timeArray = [];
-  const inArray = [];
-  const outArray = [];
+  const divideNum = 10
+  const timeArray = []
+  const inArray = []
+  const outArray = []
   for (let i = 0; i < divideNum; i++) {
     // const [timeArray, inArray, outArray] = dataset;
     if (dateTime.length > 0) {
-      const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum;
-      const enhandTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i;
+      const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum
+      const enhandTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i
       // console.log('dateAbsTime..', dateAbsTime, enhandTime);
-      timeArray.push(dayjs(enhandTime).format('YYYY-MM-DD'));
+      timeArray.push(dayjs(enhandTime).format('YYYY-MM-DD'))
     } else {
       timeArray.push(
         dayjs()
           .subtract(divideNum - i, 'day')
           .format('YYYY-MM-DD'),
-      );
+      )
     }
 
-    inArray.push(getRandomArray().toString());
-    outArray.push(getRandomArray().toString());
+    inArray.push(getRandomArray().toString())
+    outArray.push(getRandomArray().toString())
   }
 
   // console.log('timeArray..', timeArray);
@@ -179,9 +175,9 @@ export function constructInitDataset({
         type: 'bar',
       },
     ],
-  };
+  }
 
-  return dataset;
+  return dataset
 }
 
 /**
@@ -191,31 +187,27 @@ export function constructInitDataset({
  * @param {Array<string>} [dateTime=[]]
  * @returns {*}
  */
-export function getLineChartDataSet({
-  dateTime = [],
-  placeholderColor,
-  borderColor,
-}: { dateTime?: Array<string> } & TChartColor) {
-  const divideNum = 10;
-  const timeArray = [];
-  const inArray = [];
-  const outArray = [];
+export function getLineChartDataSet({ dateTime = [], placeholderColor, borderColor }: { dateTime?: Array<string> } & TChartColor) {
+  const divideNum = 10
+  const timeArray = []
+  const inArray = []
+  const outArray = []
   for (let i = 0; i < divideNum; i++) {
     if (dateTime.length > 0) {
-      const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum;
-      const enhandTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i;
+      const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum
+      const enhandTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i
       // console.log('dateAbsTime..', dateAbsTime, enhandTime);
-      timeArray.push(dayjs(enhandTime).format('MM-DD'));
+      timeArray.push(dayjs(enhandTime).format('MM-DD'))
     } else {
       timeArray.push(
         dayjs()
           .subtract(divideNum - i, 'day')
           .format('MM-DD'),
-      );
+      )
     }
 
-    inArray.push(getRandomArray().toString());
-    outArray.push(getRandomArray().toString());
+    inArray.push(getRandomArray().toString())
+    outArray.push(getRandomArray().toString())
   }
 
   const dataSet = {
@@ -295,8 +287,8 @@ export function getLineChartDataSet({
         },
       },
     ],
-  };
-  return dataSet;
+  }
+  return dataSet
 }
 
 /**
@@ -306,12 +298,7 @@ export function getLineChartDataSet({
  * @param {number} [radius=1]
  * @returns {*}
  */
-export function getPieChartDataSet({
-  radius = 42,
-  textColor,
-  placeholderColor,
-  containerColor,
-}: { radius?: number } & Record<string, string>) {
+export function getPieChartDataSet({ radius = 42, textColor, placeholderColor, containerColor }: { radius?: number } & Record<string, string>) {
   return {
     color: getChartListColor(),
     tooltip: {
@@ -397,5 +384,5 @@ export function getPieChartDataSet({
         ],
       },
     ],
-  };
+  }
 }

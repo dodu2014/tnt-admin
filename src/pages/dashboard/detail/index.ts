@@ -1,7 +1,7 @@
-import dayjs from 'dayjs';
-import { TChartColor } from '@/config/color';
-import { getChartListColor } from '@/utils/color';
-import { getRandomArray, getDateArray } from '@/utils/charts';
+import dayjs from 'dayjs'
+import { TChartColor } from '@/config/color'
+import { getChartListColor } from '@/utils/color'
+import { getRandomArray, getDateArray } from '@/utils/charts'
 
 /**
  * 散点图数据
@@ -9,31 +9,27 @@ import { getRandomArray, getDateArray } from '@/utils/charts';
  * @export
  * @returns {}
  */
-export function getScatterDataSet({
-  dateTime = [],
-  placeholderColor,
-  borderColor,
-}: { dateTime?: Array<string> } & TChartColor) {
-  const divideNum = 40;
-  const timeArray = [];
-  const inArray = [];
-  const outArray = [];
+export function getScatterDataSet({ dateTime = [], placeholderColor, borderColor }: { dateTime?: Array<string> } & TChartColor) {
+  const divideNum = 40
+  const timeArray = []
+  const inArray = []
+  const outArray = []
   for (let i = 0; i < divideNum; i++) {
     // const [timeArray, inArray, outArray] = dataset;
     if (dateTime.length > 0) {
-      const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum;
-      const endTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i;
-      timeArray.push(dayjs(endTime).format('MM-DD'));
+      const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum
+      const endTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i
+      timeArray.push(dayjs(endTime).format('MM-DD'))
     } else {
       timeArray.push(
         dayjs()
           .subtract(divideNum - i, 'day')
           .format('MM-DD'),
-      );
+      )
     }
 
-    inArray.push(getRandomArray().toString());
-    outArray.push(getRandomArray().toString());
+    inArray.push(getRandomArray().toString())
+    outArray.push(getRandomArray().toString())
   }
 
   return {
@@ -110,19 +106,15 @@ export function getScatterDataSet({
         type: 'scatter',
       },
     ],
-  };
+  }
 }
 
 /** 折线图数据 */
-export function getFolderLineDataSet({
-  dateTime = [],
-  placeholderColor,
-  borderColor,
-}: { dateTime?: Array<string> } & TChartColor) {
-  let dateArray: Array<string> = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+export function getFolderLineDataSet({ dateTime = [], placeholderColor, borderColor }: { dateTime?: Array<string> } & TChartColor) {
+  let dateArray: Array<string> = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
   if (dateTime.length > 0) {
-    const divideNum = 7;
-    dateArray = getDateArray(dateTime, divideNum);
+    const divideNum = 7
+    dateArray = getDateArray(dateTime, divideNum)
   }
   return {
     color: getChartListColor(),
@@ -177,15 +169,7 @@ export function getFolderLineDataSet({
         symbolSize: 8,
         name: '杯子',
         stack: '总量',
-        data: [
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-        ],
+        data: [getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray()],
         type: 'line',
         itemStyle: {
           borderColor,
@@ -198,15 +182,7 @@ export function getFolderLineDataSet({
         symbolSize: 8,
         name: '茶叶',
         stack: '总量',
-        data: [
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-        ],
+        data: [getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray()],
         type: 'line',
         itemStyle: {
           borderColor,
@@ -219,15 +195,7 @@ export function getFolderLineDataSet({
         symbolSize: 8,
         name: '蜂蜜',
         stack: '总量',
-        data: [
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-        ],
+        data: [getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray()],
         type: 'line',
         itemStyle: {
           borderColor,
@@ -240,15 +208,7 @@ export function getFolderLineDataSet({
         symbolSize: 8,
         name: '面粉',
         stack: '总量',
-        data: [
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-        ],
+        data: [getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray()],
         type: 'line',
         itemStyle: {
           borderColor,
@@ -256,5 +216,5 @@ export function getFolderLineDataSet({
         },
       },
     ],
-  };
+  }
 }

@@ -26,31 +26,24 @@
     </div>
     <div class="operator-footer">
       <span class="operator-footer-percentage">{{ data.use }} / {{ data.stock }}（台）</span>
-      <t-progress
-        class="operator-progress"
-        theme="line"
-        :percentage="(data.use / data.stock) * 100"
-        :label="false"
-        :color="data.use / data.stock < 0.5 ? '#E24D59' : ''"
-        :track-color="data.use / data.stock < 0.5 ? '#FCD4D4' : '#D4E3FC'"
-      />
+      <t-progress class="operator-progress" theme="line" :percentage="(data.use / data.stock) * 100" :label="false" :color="data.use / data.stock < 0.5 ? '#E24D59' : ''" :track-color="data.use / data.stock < 0.5 ? '#FCD4D4' : '#D4E3FC'" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
     data: {
       type: Object,
       default: () => {
-        return {};
+        return {}
       },
     },
   },
-});
+})
 </script>
 
 <style lang="less" scoped>

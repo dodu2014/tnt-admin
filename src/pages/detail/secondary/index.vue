@@ -15,11 +15,7 @@
                 <span class="msg-date">{{ item.date }}</span>
 
                 <div class="msg-action">
-                  <t-tooltip
-                    class="set-read-icon"
-                    :overlay-style="{ margin: '6px' }"
-                    :content="item.status ? '设为已读' : '设为未读'"
-                  >
+                  <t-tooltip class="set-read-icon" :overlay-style="{ margin: '6px' }" :content="item.status ? '设为已读' : '设为未读'">
                     <span class="msg-action-icon" @click="setReadStatus(item)">
                       <t-icon v-if="!!item.status" name="queue" size="16px" />
                       <t-icon v-else name="chat" />
@@ -41,28 +37,23 @@
         </t-tab-panel>
       </t-tabs>
     </div>
-    <t-dialog
-      v-model:visible="visible"
-      header="删除通知"
-      :body="`确认删除通知：${selectedItem && selectedItem.content}吗？`"
-      :on-confirm="deleteMsg"
-    />
+    <t-dialog v-model:visible="visible" header="删除通知" :body="`确认删除通知：${selectedItem && selectedItem.content}吗？`" :on-confirm="deleteMsg" />
   </div>
 </template>
 
 <script lang="ts">
 export default {
   name: 'DetailSecondary',
-};
+}
 </script>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { storeToRefs } from 'pinia';
-import { NOTIFICATION_TYPES } from '@/constants';
-import { NotificationItem } from '@/types/interface';
-import EmptyIcon from '@/assets/assets-empty.svg?component';
-import { useNotificationStore } from '@/store';
+import { ref, computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { NOTIFICATION_TYPES } from '@/constants'
+import { NotificationItem } from '@/types/interface'
+import EmptyIcon from '@/assets/assets-empty.svg?component'
+import { useNotificationStore } from '@/store'
 
 const TAB_LIST = [
   {
@@ -77,49 +68,49 @@ const TAB_LIST = [
     label: '已读通知',
     value: 'readMsg',
   },
-];
+]
 
-const tabValue = ref('msgData');
+const tabValue = ref('msgData')
 
-const visible = ref(false);
-const selectedItem = ref<NotificationItem>();
+const visible = ref(false)
+const selectedItem = ref<NotificationItem>()
 
-const store = useNotificationStore();
-const { msgData, unreadMsg, readMsg } = storeToRefs(store);
+const store = useNotificationStore()
+const { msgData, unreadMsg, readMsg } = storeToRefs(store)
 
 const msgDataList = computed(() => {
-  if (tabValue.value === 'msgData') return msgData.value;
-  if (tabValue.value === 'unreadMsg') return unreadMsg.value;
-  if (tabValue.value === 'readMsg') return readMsg.value;
-  return [];
-});
+  if (tabValue.value === 'msgData') return msgData.value
+  if (tabValue.value === 'unreadMsg') return unreadMsg.value
+  if (tabValue.value === 'readMsg') return readMsg.value
+  return []
+})
 
 const handleClickDeleteBtn = (item: NotificationItem) => {
-  visible.value = true;
-  selectedItem.value = item;
-};
+  visible.value = true
+  selectedItem.value = item
+}
 
 const setReadStatus = (item: NotificationItem) => {
-  const changeMsg = msgData.value;
+  const changeMsg = msgData.value
   changeMsg.forEach((e: NotificationItem) => {
     if (e.id === item.id) {
-      if (e.status) e.status = false;
+      if (e.status) e.status = false
     }
-  });
-  store.setMsgData(changeMsg);
-};
+  })
+  store.setMsgData(changeMsg)
+}
 
 const deleteMsg = () => {
-  const item = selectedItem.value;
-  const changeMsg = msgData.value;
+  const item = selectedItem.value
+  const changeMsg = msgData.value
   changeMsg.forEach((e: NotificationItem, index: number) => {
     if (e.id === item?.id) {
-      changeMsg.splice(index, 1);
+      changeMsg.splice(index, 1)
     }
-  });
-  visible.value = false;
-  store.setMsgData(changeMsg);
-};
+  })
+  visible.value = false
+  store.setMsgData(changeMsg)
+}
 </script>
 
 <style lang="less" scoped>

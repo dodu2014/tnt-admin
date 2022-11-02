@@ -34,12 +34,8 @@
           <t-dropdown :min-column-width="135" trigger="click">
             <template #dropdown>
               <t-dropdown-menu>
-                <t-dropdown-item class="operations-dropdown-container-item" @click="handleNav('/user/index')">
-                  <t-icon name="user-circle"></t-icon>个人中心
-                </t-dropdown-item>
-                <t-dropdown-item class="operations-dropdown-container-item" @click="handleLogout">
-                  <t-icon name="poweroff"></t-icon>退出登录
-                </t-dropdown-item>
+                <t-dropdown-item class="operations-dropdown-container-item" @click="handleNav('/user/index')"> <t-icon name="user-circle"></t-icon>个人中心 </t-dropdown-item>
+                <t-dropdown-item class="operations-dropdown-container-item" @click="handleLogout"> <t-icon name="poweroff"></t-icon>退出登录 </t-dropdown-item>
               </t-dropdown-menu>
             </template>
             <t-button class="header-user-btn" theme="default" variant="text">
@@ -64,17 +60,17 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useSettingStore } from '@/store';
-import { getActive } from '@/router';
-import { prefix } from '@/config/global';
-import LogoFull from '@/assets/assets-logo-full.svg?component';
-import { MenuRoute } from '@/types/interface';
+import { PropType, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useSettingStore } from '@/store'
+import { getActive } from '@/router'
+import { prefix } from '@/config/global'
+import LogoFull from '@/assets/assets-logo-full.svg?component'
+import { MenuRoute } from '@/types/interface'
 
-import Notice from './Notice.vue';
-import Search from './Search.vue';
-import MenuContent from './MenuContent.vue';
+import Notice from './Notice.vue'
+import Search from './Search.vue'
+import MenuContent from './MenuContent.vue'
 
 const props = defineProps({
   theme: {
@@ -105,23 +101,23 @@ const props = defineProps({
     type: Number,
     default: 3,
   },
-});
+})
 
-const router = useRouter();
-const settingStore = useSettingStore();
+const router = useRouter()
+const settingStore = useSettingStore()
 
 const toggleSettingPanel = () => {
   settingStore.updateConfig({
     showSettingPanel: true,
-  });
-};
+  })
+}
 
-const active = computed(() => getActive());
+const active = computed(() => getActive())
 
-const layoutCls = computed(() => [`${prefix}-header-layout`]);
+const layoutCls = computed(() => [`${prefix}-header-layout`])
 
 const menuCls = computed(() => {
-  const { isFixed, layout, isCompact } = props;
+  const { isFixed, layout, isCompact } = props
   return [
     {
       [`${prefix}-header-menu`]: !isFixed,
@@ -129,30 +125,30 @@ const menuCls = computed(() => {
       [`${prefix}-header-menu-fixed-side`]: layout === 'side' && isFixed,
       [`${prefix}-header-menu-fixed-side-compact`]: layout === 'side' && isFixed && isCompact,
     },
-  ];
-});
+  ]
+})
 
 const changeCollapsed = () => {
   settingStore.updateConfig({
     isSidebarCompact: !settingStore.isSidebarCompact,
-  });
-};
+  })
+}
 
-const handleNav = (url) => {
-  router.push(url);
-};
+const handleNav = url => {
+  router.push(url)
+}
 
 const handleLogout = () => {
-  router.push(`/login?redirect=${router.currentRoute.value.fullPath}`);
-};
+  router.push(`/login?redirect=${router.currentRoute.value.fullPath}`)
+}
 
 const navToGitHub = () => {
-  window.open('https://github.com/tencent/tdesign-vue-next-starter');
-};
+  window.open('https://github.com/tencent/tdesign-vue-next-starter')
+}
 
 const navToHelper = () => {
-  window.open('http://tdesign.tencent.com/starter/docs/get-started');
-};
+  window.open('http://tdesign.tencent.com/starter/docs/get-started')
+}
 </script>
 <style lang="less" scoped>
 .@{starter-prefix}-header {

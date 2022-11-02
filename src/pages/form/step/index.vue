@@ -15,22 +15,13 @@
       <div v-show="activeForm === 0" class="rule-tips">
         <t-alert theme="info" title="发票开具规则：" :close="true">
           <template #message>
-            <p>
-              1、申请开票后，电子发票在1～3个工作日内开具；增值税专用发票（纸质）如资质审核通过，将在电子发票开具后10个工作日内为您寄出；
-            </p>
+            <p>1、申请开票后，电子发票在1～3个工作日内开具；增值税专用发票（纸质）如资质审核通过，将在电子发票开具后10个工作日内为您寄出；</p>
             <p>2、开票金额为您实际支付金额；</p>
             <p>3、如有疑问请直接联系：13300001111。</p>
           </template>
         </t-alert>
       </div>
-      <t-form
-        v-show="activeForm === 0"
-        class="step-form"
-        :data="formData1"
-        :rules="FORM_RULES"
-        label-align="right"
-        @submit="(result) => onSubmit(result, 1)"
-      >
+      <t-form v-show="activeForm === 0" class="step-form" :data="formData1" :rules="FORM_RULES" label-align="right" @submit="result => onSubmit(result, 1)">
         <t-form-item label="合同名称" name="name">
           <t-select v-model="formData1.name" :style="{ width: '480px' }" class="demo-select-base" clearable>
             <t-option v-for="(item, index) in NAME_OPTIONS" :key="index" :value="item.value" :label="item.label">
@@ -52,15 +43,7 @@
       </t-form>
 
       <!-- 分步表单2 -->
-      <t-form
-        v-show="activeForm === 1"
-        class="step-form"
-        :data="formData2"
-        :rules="FORM_RULES"
-        label-align="left"
-        @reset="onReset(0)"
-        @submit="(result) => onSubmit(result, 2)"
-      >
+      <t-form v-show="activeForm === 1" class="step-form" :data="formData2" :rules="FORM_RULES" label-align="left" @reset="onReset(0)" @submit="result => onSubmit(result, 2)">
         <t-form-item label="发票抬头" name="title">
           <t-input v-model="formData2.title" :style="{ width: '480px' }" placeholder="请输入发票抬头" />
         </t-form-item>
@@ -89,15 +72,7 @@
       </t-form>
 
       <!-- 分步表单3 -->
-      <t-form
-        v-show="activeForm === 2"
-        class="step-form"
-        :data="formData3"
-        :rules="FORM_RULES"
-        label-align="left"
-        @reset="onReset(1)"
-        @submit="(result) => onSubmit(result, 6)"
-      >
+      <t-form v-show="activeForm === 2" class="step-form" :data="formData3" :rules="FORM_RULES" label-align="left" @reset="onReset(1)" @submit="result => onSubmit(result, 6)">
         <t-form-item label="收货人" name="consignee">
           <t-input v-model="formData3.consignee" :style="{ width: '480px' }" placeholder="请输入收货人" />
         </t-form-item>
@@ -105,13 +80,7 @@
           <t-input v-model="formData3.mobileNum" :style="{ width: '480px' }" placeholder="请输入手机号码" />
         </t-form-item>
         <t-form-item label="收货地址" name="deliveryAddress">
-          <t-select
-            v-model="formData3.deliveryAddress"
-            :style="{ width: '480px' }"
-            placeholder="请选择收货地址"
-            class="demo-select-base"
-            clearable
-          >
+          <t-select v-model="formData3.deliveryAddress" :style="{ width: '480px' }" placeholder="请选择收货地址" class="demo-select-base" clearable>
             <t-option v-for="(item, index) in ADDRESS_OPTIONS" :key="index" :value="item.value" :label="item.label">
               {{ item.label }}
             </t-option>
@@ -143,54 +112,46 @@
 <script lang="ts">
 export default {
   name: 'FormStep',
-};
+}
 </script>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { ValidateResultContext } from 'tdesign-vue-next';
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { ValidateResultContext } from 'tdesign-vue-next'
 
-import {
-  FORM_RULES,
-  NAME_OPTIONS,
-  TYPE_OPTIONS,
-  ADDRESS_OPTIONS,
-  INITIAL_DATA1,
-  INITIAL_DATA2,
-  INITIAL_DATA3,
-} from './constants';
+import { FORM_RULES, NAME_OPTIONS, TYPE_OPTIONS, ADDRESS_OPTIONS, INITIAL_DATA1, INITIAL_DATA2, INITIAL_DATA3 } from './constants'
 
-const formData1 = ref({ ...INITIAL_DATA1 });
-const formData2 = ref({ ...INITIAL_DATA2 });
-const formData3 = ref({ ...INITIAL_DATA3 });
-const activeForm = ref(0);
+const formData1 = ref({ ...INITIAL_DATA1 })
+const formData2 = ref({ ...INITIAL_DATA2 })
+const formData3 = ref({ ...INITIAL_DATA3 })
+const activeForm = ref(0)
 
 const amount = computed(() => {
   if (formData1.value.name === '1') {
-    return '565421';
+    return '565421'
   }
   if (formData1.value.name === '2') {
-    return '278821';
+    return '278821'
   }
   if (formData1.value.name === '3') {
-    return '109824';
+    return '109824'
   }
-  return '--';
-});
+  return '--'
+})
 
 const onSubmit = (result: ValidateResultContext<FormData>, val: number) => {
   if (result.validateResult === true) {
-    activeForm.value = val;
+    activeForm.value = val
   }
-};
+}
 const onReset = (val: number) => {
-  activeForm.value = val;
-};
+  activeForm.value = val
+}
 const complete = () => {
-  const router = useRouter();
-  router.replace({ path: '/detail/advanced' });
-};
+  const router = useRouter()
+  router.replace({ path: '/detail/advanced' })
+}
 </script>
 
 <style lang="less" scoped>

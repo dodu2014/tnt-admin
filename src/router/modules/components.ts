@@ -1,7 +1,7 @@
-import Layout from '@/layouts/index.vue';
-import ListIcon from '@/assets/assets-slide-list.svg';
-import FormIcon from '@/assets/assets-slide-form.svg';
-import DetailIcon from '@/assets/assets-slide-detail.svg';
+import Layout from '@/layouts/index.vue'
+import ListIcon from '@/assets/assets-slide-list.svg'
+import FormIcon from '@/assets/assets-slide-form.svg'
+import DetailIcon from '@/assets/assets-slide-detail.svg'
 
 export default [
   {
@@ -148,4 +148,4 @@ export default [
       },
     ],
   },
-];
+]

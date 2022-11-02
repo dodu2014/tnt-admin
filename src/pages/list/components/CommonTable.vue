@@ -1,57 +1,27 @@
 <template>
   <div class="list-common-table">
-    <t-form
-      ref="form"
-      :data="formData"
-      :label-width="80"
-      colon
-      :style="{ marginBottom: '8px' }"
-      @reset="onReset"
-      @submit="onSubmit"
-    >
+    <t-form ref="form" :data="formData" :label-width="80" colon :style="{ marginBottom: '8px' }" @reset="onReset" @submit="onSubmit">
       <t-row>
         <t-col :span="10">
           <t-row :gutter="[16, 24]">
             <t-col :span="4">
               <t-form-item label="合同名称" name="name">
-                <t-input
-                  v-model="formData.name"
-                  class="form-item-content"
-                  type="search"
-                  placeholder="请输入合同名称"
-                  :style="{ minWidth: '134px' }"
-                />
+                <t-input v-model="formData.name" class="form-item-content" type="search" placeholder="请输入合同名称" :style="{ minWidth: '134px' }" />
               </t-form-item>
             </t-col>
             <t-col :span="4">
               <t-form-item label="合同状态" name="status">
-                <t-select
-                  v-model="formData.status"
-                  class="form-item-content"
-                  :options="CONTRACT_STATUS_OPTIONS"
-                  placeholder="请选择合同状态"
-                />
+                <t-select v-model="formData.status" class="form-item-content" :options="CONTRACT_STATUS_OPTIONS" placeholder="请选择合同状态" />
               </t-form-item>
             </t-col>
             <t-col :span="4">
               <t-form-item label="合同编号" name="no">
-                <t-input
-                  v-model="formData.no"
-                  class="form-item-content"
-                  placeholder="请输入合同编号"
-                  :style="{ minWidth: '134px' }"
-                />
+                <t-input v-model="formData.no" class="form-item-content" placeholder="请输入合同编号" :style="{ minWidth: '134px' }" />
               </t-form-item>
             </t-col>
             <t-col :span="4">
               <t-form-item label="合同类型" name="type">
-                <t-select
-                  v-model="formData.type"
-                  style="display: inline-block"
-                  class="form-item-content"
-                  :options="CONTRACT_TYPE_OPTIONS"
-                  placeholder="请选择合同类型"
-                />
+                <t-select v-model="formData.type" style="display: inline-block" class="form-item-content" :options="CONTRACT_TYPE_OPTIONS" placeholder="请选择合同类型" />
               </t-form-item>
             </t-col>
           </t-row>
@@ -90,45 +60,29 @@
           <p v-if="row.contractType === CONTRACT_TYPES.SUPPLEMENT">待履行</p>
         </template>
         <template #paymentType="{ row }">
-          <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT" class="payment-col">
-            付款<trend class="dashboard-item-trend" type="up" />
-          </p>
-          <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT" class="payment-col">
-            收款<trend class="dashboard-item-trend" type="down" />
-          </p>
+          <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.PAYMENT" class="payment-col">付款<trend class="dashboard-item-trend" type="up" /></p>
+          <p v-if="row.paymentType === CONTRACT_PAYMENT_TYPES.RECEIPT" class="payment-col">收款<trend class="dashboard-item-trend" type="down" /></p>
         </template>
         <template #op="slotProps">
           <a class="t-button-link" @click="rehandleClickOp(slotProps)">管理</a>
           <a class="t-button-link" @click="handleClickDelete(slotProps)">删除</a>
         </template>
       </t-table>
-      <t-dialog
-        v-model:visible="confirmVisible"
-        header="确认删除当前所选合同？"
-        :body="confirmBody"
-        :on-cancel="onCancel"
-        @confirm="onConfirmDelete"
-      />
+      <t-dialog v-model:visible="confirmVisible" header="确认删除当前所选合同？" :body="confirmBody" :on-cancel="onCancel" @confirm="onConfirmDelete" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import { MessagePlugin } from 'tdesign-vue-next';
-import Trend from '@/components/trend/index.vue';
-import { getList } from '@/api/list';
-import { useSettingStore } from '@/store';
-import { prefix } from '@/config/global';
+import { ref, computed, onMounted } from 'vue'
+import { MessagePlugin } from 'tdesign-vue-next'
+import Trend from '@/components/trend/index.vue'
+import { getList } from '@/api/list'
+import { useSettingStore } from '@/store'
+import { prefix } from '@/config/global'
 
-import {
-  CONTRACT_STATUS,
-  CONTRACT_STATUS_OPTIONS,
-  CONTRACT_TYPES,
-  CONTRACT_TYPE_OPTIONS,
-  CONTRACT_PAYMENT_TYPES,
-} from '@/constants';
+import { CONTRACT_STATUS, CONTRACT_STATUS_OPTIONS, CONTRACT_TYPES, CONTRACT_TYPE_OPTIONS, CONTRACT_PAYMENT_TYPES } from '@/constants'
 
-const store = useSettingStore();
+const store = useSettingStore()
 
 const COLUMNS = [
   {
@@ -171,103 +125,103 @@ const COLUMNS = [
     colKey: 'op',
     title: '操作',
   },
-];
+]
 
 const searchForm = {
   name: '',
   no: undefined,
   status: undefined,
   type: '',
-};
+}
 
-const formData = ref({ ...searchForm });
-const rowKey = 'index';
-const verticalAlign = 'top';
-const hover = true;
+const formData = ref({ ...searchForm })
+const rowKey = 'index'
+const verticalAlign = 'top'
+const hover = true
 
 const pagination = ref({
   defaultPageSize: 20,
   total: 100,
   defaultCurrent: 1,
-});
-const confirmVisible = ref(false);
+})
+const confirmVisible = ref(false)
 
-const data = ref([]);
+const data = ref([])
 
-const dataLoading = ref(false);
+const dataLoading = ref(false)
 const fetchData = async () => {
-  dataLoading.value = true;
+  dataLoading.value = true
   try {
-    const { list } = await getList();
-    data.value = list;
+    const { list } = await getList()
+    data.value = list
     pagination.value = {
       ...pagination.value,
       total: list.length,
-    };
+    }
   } catch (e) {
-    console.log(e);
+    console.log(e)
   } finally {
-    dataLoading.value = false;
+    dataLoading.value = false
   }
-};
+}
 
-const deleteIdx = ref(-1);
+const deleteIdx = ref(-1)
 const confirmBody = computed(() => {
   if (deleteIdx.value > -1) {
-    const { name } = data.value[deleteIdx.value];
-    return `删除后，${name}的所有合同信息将被清空，且无法恢复`;
+    const { name } = data.value[deleteIdx.value]
+    return `删除后，${name}的所有合同信息将被清空，且无法恢复`
   }
-  return '';
-});
+  return ''
+})
 
 const resetIdx = () => {
-  deleteIdx.value = -1;
-};
+  deleteIdx.value = -1
+}
 
 const onConfirmDelete = () => {
   // 真实业务请发起请求
-  data.value.splice(deleteIdx.value, 1);
-  pagination.value.total = data.value.length;
-  confirmVisible.value = false;
-  MessagePlugin.success('删除成功');
-  resetIdx();
-};
+  data.value.splice(deleteIdx.value, 1)
+  pagination.value.total = data.value.length
+  confirmVisible.value = false
+  MessagePlugin.success('删除成功')
+  resetIdx()
+}
 
 const onCancel = () => {
-  resetIdx();
-};
+  resetIdx()
+}
 
 onMounted(() => {
-  fetchData();
-});
+  fetchData()
+})
 
 const handleClickDelete = ({ row }) => {
-  deleteIdx.value = row.rowIndex;
-  confirmVisible.value = true;
-};
-const onReset = (val) => {
-  console.log(val);
-};
-const onSubmit = (val) => {
-  console.log(val);
-};
+  deleteIdx.value = row.rowIndex
+  confirmVisible.value = true
+}
+const onReset = val => {
+  console.log(val)
+}
+const onSubmit = val => {
+  console.log(val)
+}
 const rehandlePageChange = (curr, pageInfo) => {
-  console.log('分页变化', curr, pageInfo);
-};
+  console.log('分页变化', curr, pageInfo)
+}
 const rehandleChange = (changeParams, triggerAndData) => {
-  console.log('统一Change', changeParams, triggerAndData);
-};
+  console.log('统一Change', changeParams, triggerAndData)
+}
 const rehandleClickOp = ({ text, row }) => {
-  console.log(text, row);
-};
+  console.log(text, row)
+}
 
 const offsetTop = computed(() => {
-  return store.isUseTabsRouter ? 48 : 0;
-});
+  return store.isUseTabsRouter ? 48 : 0
+})
 
 const getContainer = () => {
-  return document.querySelector(`.${prefix}-layout`);
-};
+  return document.querySelector(`.${prefix}-layout`)
+}
 </script>
 
 <style lang="less" scoped>

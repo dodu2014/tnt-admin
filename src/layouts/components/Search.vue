@@ -1,11 +1,6 @@
 <template>
   <div v-if="layout === 'side'" class="header-menu-search">
-    <t-input
-      :class="['header-search', { 'hover-active': isSearchFocus }]"
-      placeholder="请输入搜索内容"
-      @blur="changeSearchFocus(false)"
-      @focus="changeSearchFocus(true)"
-    >
+    <t-input :class="['header-search', { 'hover-active': isSearchFocus }]" placeholder="请输入搜索内容" @blur="changeSearchFocus(false)" @focus="changeSearchFocus(true)">
       <template #prefix-icon>
         <t-icon class="icon" name="search" size="16" />
       </template>
@@ -13,22 +8,10 @@
   </div>
 
   <div v-else class="header-menu-search-left">
-    <t-button
-      :class="{ 'search-icon-hide': isSearchFocus }"
-      theme="default"
-      shape="square"
-      variant="text"
-      @click="changeSearchFocus(true)"
-    >
+    <t-button :class="{ 'search-icon-hide': isSearchFocus }" theme="default" shape="square" variant="text" @click="changeSearchFocus(true)">
       <t-icon name="search" />
     </t-button>
-    <t-input
-      v-model="searchData"
-      :class="['header-search', { 'width-zero': !isSearchFocus }]"
-      placeholder="输入要搜索内容"
-      :autofocus="isSearchFocus"
-      @blur="changeSearchFocus(false)"
-    >
+    <t-input v-model="searchData" :class="['header-search', { 'width-zero': !isSearchFocus }]" placeholder="输入要搜索内容" :autofocus="isSearchFocus" @blur="changeSearchFocus(false)">
       <template #prefix-icon>
         <t-icon name="search" size="16" />
       </template>
@@ -37,20 +20,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 defineProps({
   layout: String,
-});
+})
 
-const isSearchFocus = ref(false);
-const searchData = ref('');
+const isSearchFocus = ref(false)
+const searchData = ref('')
 const changeSearchFocus = (value: boolean) => {
   if (!value) {
-    searchData.value = '';
+    searchData.value = ''
   }
-  isSearchFocus.value = value;
-};
+  isSearchFocus.value = value
+}
 </script>
 <style lang="less" scoped>
 .header-menu-search {

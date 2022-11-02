@@ -1,12 +1,5 @@
 <template>
-  <t-form
-    ref="form"
-    :class="['item-container', `register-${type}`]"
-    :data="formData"
-    :rules="FORM_RULES"
-    label-width="0"
-    @submit="onSubmit"
-  >
+  <t-form ref="form" :class="['item-container', `register-${type}`]" :data="formData" :rules="FORM_RULES" label-width="0" @submit="onSubmit">
     <template v-if="type == 'phone'">
       <t-form-item name="phone">
         <t-input v-model="formData.phone" :maxlength="11" size="large" placeholder="请输入您的手机号">
@@ -28,13 +21,7 @@
     </template>
 
     <t-form-item name="password">
-      <t-input
-        v-model="formData.password"
-        size="large"
-        :type="showPsw ? 'text' : 'password'"
-        clearable
-        placeholder="请输入登录密码"
-      >
+      <t-input v-model="formData.password" size="large" :type="showPsw ? 'text' : 'password'" clearable placeholder="请输入登录密码">
         <template #prefix-icon>
           <t-icon name="lock-on" />
         </template>
@@ -63,17 +50,15 @@
     </t-form-item>
 
     <div class="switch-container">
-      <span class="tip" @click="switchType(type == 'phone' ? 'email' : 'phone')">{{
-        type == 'phone' ? '使用邮箱注册' : '使用手机号注册'
-      }}</span>
+      <span class="tip" @click="switchType(type == 'phone' ? 'email' : 'phone')">{{ type == 'phone' ? '使用邮箱注册' : '使用手机号注册' }}</span>
     </div>
   </t-form>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { MessagePlugin } from 'tdesign-vue-next';
-import { useCounter } from '@/hooks';
+import { ref } from 'vue'
+import { MessagePlugin } from 'tdesign-vue-next'
+import { useCounter } from '@/hooks'
 
 const INITIAL_DATA = {
   phone: '',
@@ -81,7 +66,7 @@ const INITIAL_DATA = {
   password: '',
   verifyCode: '',
   checked: false,
-};
+}
 
 const FORM_RULES = {
   phone: [{ required: true, message: '手机号必填', type: 'error' }],
@@ -91,34 +76,34 @@ const FORM_RULES = {
   ],
   password: [{ required: true, message: '密码必填', type: 'error' }],
   verifyCode: [{ required: true, message: '验证码必填', type: 'error' }],
-};
+}
 
-const type = ref('phone');
+const type = ref('phone')
 
-const form = ref();
-const formData = ref({ ...INITIAL_DATA });
+const form = ref()
+const formData = ref({ ...INITIAL_DATA })
 
-const showPsw = ref(false);
+const showPsw = ref(false)
 
-const [countDown, handleCounter] = useCounter();
+const [countDown, handleCounter] = useCounter()
 
-const emit = defineEmits(['registerSuccess']);
+const emit = defineEmits(['registerSuccess'])
 
 const onSubmit = ({ validateResult }) => {
   if (validateResult === true) {
     if (!formData.value.checked) {
-      MessagePlugin.error('请同意TDesign服务协议和TDesign 隐私声明');
-      return;
+      MessagePlugin.error('请同意TDesign服务协议和TDesign 隐私声明')
+      return
     }
-    MessagePlugin.success('注册成功');
-    emit('registerSuccess');
+    MessagePlugin.success('注册成功')
+    emit('registerSuccess')
   }
-};
+}
 
-const switchType = (val) => {
-  form.value.reset();
-  type.value = val;
-};
+const switchType = val => {
+  form.value.reset()
+  type.value = val
+}
 </script>
 
 <style lang="less" scoped>

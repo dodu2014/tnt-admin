@@ -1,17 +1,13 @@
-import { TChartColor } from '@/config/color';
-import { getChartListColor } from '@/utils/color';
-import { getRandomArray, getDateArray } from '@/utils/charts';
+import { TChartColor } from '@/config/color'
+import { getChartListColor } from '@/utils/color'
+import { getRandomArray, getDateArray } from '@/utils/charts'
 
 /** 平滑图数据 */
-export function getSmoothLineDataSet({
-  dateTime = [],
-  placeholderColor,
-  borderColor,
-}: { dateTime?: Array<string> } & TChartColor) {
-  let dateArray: Array<string> = ['00:00', '02:00', '04:00', '06:00'];
+export function getSmoothLineDataSet({ dateTime = [], placeholderColor, borderColor }: { dateTime?: Array<string> } & TChartColor) {
+  let dateArray: Array<string> = ['00:00', '02:00', '04:00', '06:00']
   if (dateTime.length > 0) {
-    const divideNum = 7;
-    dateArray = getDateArray(dateTime, divideNum);
+    const divideNum = 7
+    dateArray = getDateArray(dateTime, divideNum)
   }
 
   return {
@@ -66,15 +62,7 @@ export function getSmoothLineDataSet({
     series: [
       {
         name: '上月',
-        data: [
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-        ],
+        data: [getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray()],
         type: 'line',
         smooth: true,
         color: getChartListColor()[0],
@@ -87,15 +75,7 @@ export function getSmoothLineDataSet({
       },
       {
         name: '本月',
-        data: [
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-          getRandomArray(),
-        ],
+        data: [getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray(), getRandomArray()],
         type: 'line',
         smooth: true,
         showSymbol: true,
@@ -104,10 +84,10 @@ export function getSmoothLineDataSet({
         color: getChartListColor()[1],
       },
     ],
-  };
+  }
 }
 
-export const lastYearList: Array<any> = [100, 120, 140, 160, 180, 200, 210];
+export const lastYearList: Array<any> = [100, 120, 140, 160, 180, 200, 210]
 
 /**
  * 柱状图数据结构
@@ -116,17 +96,13 @@ export const lastYearList: Array<any> = [100, 120, 140, 160, 180, 200, 210];
  * @param {boolean} [isMonth=false]
  * @returns {*}
  */
-export function get2ColBarChartDataSet({
-  isMonth = false,
-  placeholderColor,
-  borderColor,
-}: { isMonth?: boolean } & TChartColor) {
-  let lastYearListCopy = lastYearList.concat([]);
-  let thisYearListCopy = lastYearList.concat([]);
+export function get2ColBarChartDataSet({ isMonth = false, placeholderColor, borderColor }: { isMonth?: boolean } & TChartColor) {
+  let lastYearListCopy = lastYearList.concat([])
+  let thisYearListCopy = lastYearList.concat([])
 
   if (isMonth) {
-    lastYearListCopy = lastYearListCopy.reverse();
-    thisYearListCopy = thisYearListCopy.reverse();
+    lastYearListCopy = lastYearListCopy.reverse()
+    thisYearListCopy = thisYearListCopy.reverse()
   }
 
   return {
@@ -202,12 +178,12 @@ export function get2ColBarChartDataSet({
         itemStyle: {
           color: (params: { value: number }) => {
             if (params.value >= 200) {
-              return getChartListColor()[1];
+              return getChartListColor()[1]
             }
-            return getChartListColor()[0];
+            return getChartListColor()[0]
           },
         },
       },
     ],
-  };
+  }
 }
