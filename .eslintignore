@@ -1,5 +1,6 @@
 snapshot*
 dist
+dev-dist
 lib
 es
 esm

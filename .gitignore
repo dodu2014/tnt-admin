@@ -5,6 +5,8 @@ node_modules
 es/
 lib/
 dist/
+# PWA 开发模式产物目录
+dev-dist/
 typings/
 
 _site
