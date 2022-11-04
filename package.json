@@ -1,5 +1,5 @@
 {
-  "name": "tdesign-vue-next-starter",
+  "name": "tnt-admin",
   "version": "0.5.4",
   "scripts": {
     "dev:mock": "vite --open --mode mock",

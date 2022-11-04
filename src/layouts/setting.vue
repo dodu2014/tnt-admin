@@ -1,5 +1,5 @@
 <template>
-  <t-drawer v-model:visible="showSettingPanel" size="408px" :footer="false" header="页面配置" :close-btn="true" class="setting-drawer-container" @close-btn-click="handleCloseDrawer">
+  <t-drawer v-model:visible="showSettingPanel" size="408px" :footer="false" header="系统配置" :close-btn="true" class="setting-drawer-container" @close-btn-click="handleCloseDrawer">
     <div class="setting-container">
       <t-form ref="form" :data="formData" label-align="left">
         <div class="setting-group-title">主题模式</div>
@@ -62,7 +62,7 @@
         </t-form-item>
       </t-form>
       <div class="setting-info">
-        <p>请复制后手动修改配置文件: /src/config/style.ts</p>
+        <!-- <p>请复制后手动修改配置文件: /src/config/style.ts</p> -->
         <t-button theme="primary" variant="text" @click="handleCopy"> 复制配置项 </t-button>
       </div>
     </div>

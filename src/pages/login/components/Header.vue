@@ -2,14 +2,14 @@
   <header class="login-header">
     <logo-full-icon class="logo" />
     <div class="operations-container">
-      <t-button theme="default" shape="square" variant="text" @click="navToGitHub">
-        <t-icon name="logo-github" class="icon" />
+      <t-button theme="default" shape="square" variant="text" @click="navToHome">
+        <t-icon name="home" size="20" />
       </t-button>
       <t-button theme="default" shape="square" variant="text" @click="navToHelper">
-        <t-icon name="help-circle" class="icon" />
+        <t-icon name="help-circle" size="20" />
       </t-button>
       <t-button theme="default" shape="square" variant="text" @click="toggleSettingPanel">
-        <t-icon name="setting" class="icon" />
+        <t-icon name="setting" size="20" />
       </t-button>
     </div>
   </header>
@@ -26,12 +26,12 @@ const toggleSettingPanel = () => {
   })
 }
 
-const navToGitHub = () => {
-  window.open('https://github.com/tencent/tdesign-vue-next-starter')
+const navToHome = () => {
+  window.open('https://www.5shiguang.net')
 }
 
 const navToHelper = () => {
-  window.open('http://tdesign.tencent.com/starter/docs/get-started')
+  window.open('https://tdesign.tencent.com/vue-next')
 }
 </script>
 
@@ -53,20 +53,6 @@ const navToHelper = () => {
   .operations-container {
     display: flex;
     align-items: center;
-    .t-button {
-      margin-left: 16px;
-    }
-
-    .icon {
-      height: 20px;
-      width: 20px;
-      padding: 6px;
-      box-sizing: content-box;
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
   }
 }
 </style>
