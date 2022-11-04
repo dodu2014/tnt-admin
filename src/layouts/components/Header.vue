@@ -16,40 +16,55 @@
       <template #operations>
         <div class="operations-container">
           <!-- 搜索框 -->
-          <search v-if="layout !== 'side'" :layout="layout" />
+          <!-- <search v-if="layout !== 'side'" :layout="layout" /> -->
+
+          <t-tooltip placement="bottom" content="首页">
+            <t-button theme="default" shape="square" variant="text" class="mx-0" @click="navToHome">
+              <t-icon name="home" />
+            </t-button>
+          </t-tooltip>
+
+          <t-popup expand-animation show-arrow placement="bottom-right" trigger="click">
+            <template #content>
+              <div class="text-center">
+                <qrcode-vue value="https://www.5shiguang.net/" :size="128" :margin="3" level="H" />
+                <p class="mb-2">微信扫码下载</p>
+              </div>
+            </template>
+            <t-button theme="default" shape="square" variant="text" class="mx-0" title="APP 下载">
+              <t-icon name="qrcode" />
+            </t-button>
+          </t-popup>
 
           <!-- 全局通知 -->
           <notice />
 
-          <t-tooltip placement="bottom" content="代码仓库">
-            <t-button theme="default" shape="square" variant="text" @click="navToGitHub">
-              <t-icon name="logo-github" />
-            </t-button>
-          </t-tooltip>
-          <t-tooltip placement="bottom" content="帮助文档">
-            <t-button theme="default" shape="square" variant="text" @click="navToHelper">
-              <t-icon name="help-circle" />
-            </t-button>
-          </t-tooltip>
-          <t-dropdown :min-column-width="135" trigger="click">
+          <t-dropdown :min-column-width="135" trigger="click" placement="bottom-right">
             <template #dropdown>
               <t-dropdown-menu>
-                <t-dropdown-item class="operations-dropdown-container-item" @click="handleNav('/user/index')"> <t-icon name="user-circle"></t-icon>个人中心 </t-dropdown-item>
+                <t-dropdown-item class="operations-dropdown-container-item" @click="handleNav('/user/index')"> <t-icon name="user"></t-icon>个人中心 </t-dropdown-item>
                 <t-dropdown-item class="operations-dropdown-container-item" @click="handleLogout"> <t-icon name="poweroff"></t-icon>退出登录 </t-dropdown-item>
               </t-dropdown-menu>
             </template>
             <t-button class="header-user-btn" theme="default" variant="text">
               <template #icon>
-                <t-icon class="header-user-avatar" name="user-circle" />
+                <t-icon class="header-user-avatar" name="user" />
               </template>
               <div class="header-user-account">
-                Tencent
-                <t-icon name="chevron-down" />
+                {{ userInfo.name }}
+                <t-icon name="chevron-down" class="icon-chevron-down" />
               </div>
             </t-button>
           </t-dropdown>
+
+          <t-tooltip placement="bottom" content="帮助文档">
+            <t-button theme="default" shape="square" variant="text" @click="navToHelper">
+              <t-icon name="help-circle" />
+            </t-button>
+          </t-tooltip>
+
           <t-tooltip placement="bottom" content="系统设置">
-            <t-button theme="default" shape="square" variant="text" @click="toggleSettingPanel">
+            <t-button theme="default" shape="square" variant="text" class="mx-0" @click="toggleSettingPanel">
               <t-icon name="setting" />
             </t-button>
           </t-tooltip>
@@ -62,7 +77,8 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useSettingStore } from '@/store'
+import QrcodeVue from 'qrcode.vue'
+import { getUserStore, useSettingStore } from '@/store'
 import { getActive } from '@/router'
 import { prefix } from '@/config/global'
 import LogoFull from '@/assets/assets-logo-full.svg?component'
@@ -106,6 +122,9 @@ const props = defineProps({
 const router = useRouter()
 const settingStore = useSettingStore()
 
+const userStore = getUserStore()
+const { userInfo } = userStore
+
 const toggleSettingPanel = () => {
   settingStore.updateConfig({
     showSettingPanel: true,
@@ -139,15 +158,14 @@ const handleNav = url => {
 }
 
 const handleLogout = () => {
+  userStore.logout() // 注销
   router.push(`/login?redirect=${router.currentRoute.value.fullPath}`)
 }
 
-const navToGitHub = () => {
-  window.open('https://github.com/tencent/tdesign-vue-next-starter')
-}
+const navToHome = _ => window.open('https://www.5shiguang.net/')
 
 const navToHelper = () => {
-  window.open('http://tdesign.tencent.com/starter/docs/get-started')
+  window.open('https://tdesign.tencent.com/')
 }
 </script>
 <style lang="less" scoped>
@@ -201,9 +219,11 @@ const navToHelper = () => {
   }
 
   .t-button {
-    margin: 0 8px;
+    // margin: 0;
     &.header-user-btn {
       margin: 0;
+      padding-left: 5px;
+      padding-right: 5px;
     }
   }
 
@@ -250,9 +270,9 @@ const navToHelper = () => {
   display: inline-flex;
   align-items: center;
   color: var(--td-text-color-primary);
-  .t-icon {
-    margin-left: 4px;
-    font-size: 16px;
+  .t-icon.icon-chevron-down {
+    // margin-left: 4px;
+    font-size: 14px;
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <t-popup expand-animation placement="bottom-right" trigger="click">
+  <t-popup expand-animation show-arrow placement="bottom-right" trigger="click">
     <template #content>
       <div class="header-msg">
         <div class="header-msg-top">
@@ -28,9 +28,9 @@
         </div>
       </div>
     </template>
-    <t-badge :count="unreadMsg.length" :offset="[12, 8]">
-      <t-button theme="default" shape="square" variant="text">
-        <t-icon name="mail" />
+    <t-badge :count="unreadMsg.length" :offset="[8, 8]" size="small">
+      <t-button theme="default" shape="square" variant="text" title="用户消息">
+        <t-icon name="notification" />
       </t-button>
     </t-badge>
   </t-popup>
@@ -183,7 +183,7 @@ const goDetail = () => {
 }
 
 .t-button {
-  margin: 0 8px;
+  // margin: 0 8px;
 
   .t-icon {
     font-size: 20px;

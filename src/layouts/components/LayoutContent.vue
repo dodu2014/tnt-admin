@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref, computed } from 'vue'
+import { nextTick, ref, computed, provide } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useSettingStore, useTabsRouterStore } from '@/store'
 import { prefix } from '@/config/global'
@@ -106,6 +106,14 @@ const handleCloseOther = (path: string, routeIdx: number) => {
 
   handleOperationEffect('other', routeIdx)
 }
+
+// 注入关闭当前标签页的方法
+provide('removeCurrentTabRouter', path => {
+  console.log('layouts.index:provide.removeCurrentTabRouter:', path)
+  const { tabRouters } = tabsRouterStore
+  const index = tabRouters.findIndex(i => i.path === path)
+  handleRemove({ value: path, index })
+})
 
 // 处理非当前路由操作的副作用
 const handleOperationEffect = (type: 'other' | 'ahead' | 'behind', routeIndex: number) => {
