@@ -148,4 +148,72 @@ export default [
       },
     ],
   },
+
+  {
+    path: '/articles',
+    name: 'articles',
+    component: Layout,
+    redirect: '/articles/list',
+    meta: { title: '资讯', icon: 'check-circle' },
+    children: [
+      {
+        path: 'categories/list',
+        name: 'ArticlesCategoriesList',
+        component: () => import('@/pages/base/articleCategories/list.vue'),
+        meta: { title: '类目管理' },
+      },
+      {
+        path: 'list',
+        name: 'ArticlesList',
+        component: () => import('@/pages/base/articles/list-tree.vue'),
+        meta: { title: '资讯管理' },
+      },
+      {
+        path: 'create',
+        name: 'ArticlesCreate',
+        component: () => import('@/pages/base/articles/edit.vue'),
+        meta: { title: '新增资讯' },
+      },
+      {
+        path: 'edit',
+        name: 'ArticlesEdit',
+        component: () => import('@/pages/base/articles/edit.vue'),
+        meta: { title: '编辑资讯', hidden: true },
+      },
+    ],
+  },
+
+  {
+    path: '/system',
+    name: 'System',
+    component: Layout,
+    redirect: '/system/userOperateLogs/list',
+    meta: { title: '系统管理', icon: 'check-circle' },
+    children: [
+      {
+        path: 'roles/list',
+        name: 'RolesList',
+        component: () => import('@/pages/base/roles/list.vue'),
+        meta: { title: '系统角色管理' },
+      },
+      {
+        path: 'users/list',
+        name: 'UsersList',
+        component: () => import('@/pages/base/users/list-tabs.vue'),
+        meta: { title: '系统用户管理' },
+      },
+      {
+        path: 'carousels/list',
+        name: 'CarouselsList',
+        component: () => import('@/pages/base/carousels/list.vue'),
+        meta: { title: '轮播图管理' },
+      },
+      {
+        path: 'userOperateLogs/list',
+        name: 'UserOperateLogsList',
+        component: () => import('@/pages/base/userOperateLogs/list-tabs.vue'),
+        meta: { title: '用户操作日志' },
+      },
+    ],
+  },
 ]

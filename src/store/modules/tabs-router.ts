@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { LocationQueryRaw } from 'vue-router'
 import { TRouterInfo, TTabRouterType } from '@/types/interface'
 import { store } from '@/store'
 
@@ -63,6 +64,11 @@ export const useTabsRouterStore = defineStore('tabsRouter', {
     },
     removeTabRouterList() {
       this.tabRouterList = []
+    },
+    updateTabRouterQuery(path: string, query?: LocationQueryRaw) {
+      const route = this.tabRouterList.find(i => i.path === path)
+      // eslint-disable-next-line no-unused-expressions
+      route && (route.query = query)
     },
     initTabRouterList(newRoutes: TRouterInfo[]) {
       newRoutes?.forEach((route: TRouterInfo) => this.appendTabRouterList(route))
