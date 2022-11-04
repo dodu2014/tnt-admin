@@ -1,5 +1,5 @@
 <template>
-  <t-form ref="form" :class="['item-container', `register-${type}`]" :data="formData" :rules="FORM_RULES" label-width="0" @submit="onSubmit">
+  <t-form ref="form" :class="['login-form', `register-${type}`]" :data="formData" :rules="FORM_RULES" label-width="0" @submit="onSubmit">
     <template v-if="type == 'phone'">
       <t-form-item name="phone">
         <t-input v-model="formData.phone" :maxlength="11" size="large" placeholder="请输入您的手机号">
@@ -34,15 +34,17 @@
     <template v-if="type == 'phone'">
       <t-form-item class="verification-code" name="verifyCode">
         <t-input v-model="formData.verifyCode" size="large" placeholder="请输入验证码" />
-        <t-button variant="outline" :disabled="countDown > 0" @click="handleCounter">
+        <t-button theme="primary" variant="outline" :disabled="countDown > 0" @click="handleCounter">
           {{ countDown == 0 ? '发送验证码' : `${countDown}秒后可重发` }}
         </t-button>
       </t-form-item>
     </template>
 
     <t-form-item class="check-container" name="checked">
-      <t-checkbox v-model="formData.checked">我已阅读并同意 </t-checkbox> <span>TDesign服务协议</span> 和
-      <span>TDesign 隐私声明</span>
+      <t-checkbox v-model="formData.checked">我已阅读并同意</t-checkbox>
+      <a>服务协议</a>
+      <span class="mx-2">和</span>
+      <a>隐私声明</a>
     </t-form-item>
 
     <t-form-item>
@@ -50,7 +52,7 @@
     </t-form-item>
 
     <div class="switch-container">
-      <span class="tip" @click="switchType(type == 'phone' ? 'email' : 'phone')">{{ type == 'phone' ? '使用邮箱注册' : '使用手机号注册' }}</span>
+      <a class="tip" @click="switchType(type == 'phone' ? 'email' : 'phone')">{{ type == 'phone' ? '使用邮箱注册' : '使用手机号注册' }}</a>
     </div>
   </t-form>
 </template>

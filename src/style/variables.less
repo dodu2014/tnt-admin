@@ -64,3 +64,30 @@
 @anim-duration-base: 0.2s;
 @anim-duration-moderate: 0.24s;
 @anim-duration-slow: 0.28s;
+
+// 滚动条样式 混入调用
+.tdesign-scrollbar() {
+  // 定义了滚动条整体的样式
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    // background: var(--td-scrollbar-color);
+  }
+  // 滑块部分
+  &::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    // -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: var(--td-scrollbar-color);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    border-radius: 6px;
+    // -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: var(--td-scrollbar-hover-color);
+  }
+  // 轨道部分
+  &::-webkit-scrollbar-track {
+    // -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    background: var(--td-scroll-track-color);
+  }
+}

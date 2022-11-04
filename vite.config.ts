@@ -5,12 +5,13 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import svgLoader from 'vite-svg-loader'
 
 import path from 'path'
+import fs from 'fs'
 
 const CWD = process.cwd()
 
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv): UserConfig => {
-  const { VITE_BASE_URL } = loadEnv(mode, CWD)
+  const { VITE_BASE_URL, VITE_PROXY_HOST } = loadEnv(mode, CWD)
   return {
     base: VITE_BASE_URL,
     resolve: {
@@ -42,10 +43,20 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     ],
 
     server: {
-      port: 3002,
+      port: 3000,
       host: '0.0.0.0',
+      // 启用 https，参考：https://blog.csdn.net/xfjpeter/article/details/121480873
+      https: {
+        cert: fs.readFileSync(path.join(__dirname, './src/ssl/cert.crt')),
+        key: fs.readFileSync(path.join(__dirname, './src/ssl/cert.key')),
+      },
       proxy: {
-        '/api': 'http://127.0.0.1:3000/',
+        '/api': {
+          target: VITE_PROXY_HOST,
+          changeOrigin: true,
+          // secure: true,
+          rewrite: path => path.replace(/^\/api/, ''),
+        },
       },
     },
   }

@@ -1,16 +1,12 @@
 // axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
 import isString from 'lodash/isString'
 import merge from 'lodash/merge'
+import { useUserStore } from '@/store'
 import type { AxiosTransform, CreateAxiosOptions } from './AxiosTransform'
 import { VAxios } from './Axios'
-import proxy from '@/config/proxy'
 import { joinTimestamp, formatRequestDate, setObjToUrlParams } from './utils'
 import { TOKEN_NAME } from '@/config/global'
-
-const env = import.meta.env.MODE || 'development'
-
-// 如果是mock模式 或 没启用直连代理 就不配置host 会走本地Mock拦截 或 Vite 代理
-const host = env === 'mock' || !proxy.isRequestProxy ? '' : proxy[env].host
+import router from '@/router'
 
 // 数据处理，方便区分多种处理方式
 const transform: AxiosTransform = {
@@ -20,7 +16,8 @@ const transform: AxiosTransform = {
 
     // 如果204无内容直接返回
     const method = res.config.method?.toLowerCase()
-    if (res.status === 204 || method === 'put' || method === 'patch') {
+    // if (res.status === 204 || method === 'put' || method === 'patch') {
+    if (res.status === 204 || method === 'patch') {
       return res
     }
 
@@ -30,7 +27,7 @@ const transform: AxiosTransform = {
     }
     // 不进行任何处理，直接返回
     // 用于页面代码可能需要直接获取code，data，message这些信息时开启
-    if (!isTransformResponse) {
+    if (isTransformResponse) {
       return res.data
     }
 
@@ -121,7 +118,19 @@ const transform: AxiosTransform = {
 
   // 响应错误处理
   responseInterceptorsCatch: (error: any) => {
-    const { config } = error
+    const { config, response } = error
+
+    if (!response) {
+      return Promise.reject(error)
+    }
+
+    if (response.status === 401) {
+      const userStore = useUserStore()
+      userStore.logout()
+      router.push(`/login?redirect=${router.currentRoute.value.path}`)
+      return Promise.reject(error)
+    }
+
     if (!config || !config.requestOptions.retry) return Promise.reject(error)
 
     config.retryCount = config.retryCount || 0
@@ -146,7 +155,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
       <CreateAxiosOptions>{
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
         // 例如: authenticationScheme: 'Bearer'
-        authenticationScheme: '',
+        authenticationScheme: 'Bearer',
         // 超时
         timeout: 10 * 1000,
         // 携带Cookie
@@ -158,7 +167,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // 配置项，下面的选项都可以在独立的接口请求中覆盖
         requestOptions: {
           // 接口地址
-          apiUrl: host,
+          // apiUrl: host,
           // 是否自动添加接口前缀
           isJoinPrefix: true,
           // 接口前缀
@@ -190,4 +199,5 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
     ),
   )
 }
+
 export const request = createAxios()

@@ -1,0 +1,17 @@
+// 居中对齐的分页样式
+.pagination-center {
+  justify-content: center !important;
+
+  :deep(& > .t-pagination__total),
+  & > .t-pagination__total {
+    flex: none !important;
+    margin-right: 16px !important;
+  }
+
+  :deep(& > .t-pagination__select),
+  & > .t-pagination__select {
+    order: 3 !important;
+    margin-right: 0 !important;
+    margin-left: 16px !important;
+  }
+}

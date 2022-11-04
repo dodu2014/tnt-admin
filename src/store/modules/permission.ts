@@ -36,7 +36,7 @@ export const usePermissionStore = defineStore('permission', {
 
       let removeRoutes = []
       // special token
-      if (roles.includes('all')) {
+      if (roles.includes('系统管理员') || roles.includes('all')) {
         accessedRouters = asyncRouterList
       } else {
         const res = filterPermissionsRouters(asyncRouterList, roles)

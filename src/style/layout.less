@@ -216,3 +216,31 @@
 .container-base-margin-top {
   margin-top: 16px;
 }
+
+.tdesign-starter-layout {
+  overflow-y: auto !important;
+}
+
+.tdesign-starter-content-layout {
+  .tdesign-scrollbar();
+
+  height: 0;
+  flex: auto;
+  overflow-x: auto;
+}
+
+// 主要的内容布局
+.main-content-box {
+  background-color: var(--td-bg-color-container);
+  border-radius: @border-radius;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+// fill 填充，带有滚动条
+.main-content-scrollbar {
+  .tdesign-scrollbar();
+  height: 0;
+  flex: auto;
+  overflow-y: auto;
+}

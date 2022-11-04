@@ -35,10 +35,6 @@
     line-height: 44px;
     color: var(--td-text-color-primary);
     margin-top: 4px;
-
-    &.margin-no {
-      margin-top: 0;
-    }
   }
 
   .sub-title {
@@ -48,20 +44,11 @@
       display: inline-block;
       margin-right: 8px;
       font-size: 14px;
-
-      &:first-child {
-        color: var(--td-text-color-secondary);
-      }
-
-      &:last-child {
-        color: var(--td-text-color-primary);
-        cursor: pointer;
-      }
     }
   }
 }
 
-.item-container {
+.login-form {
   width: 400px;
   margin-top: 48px;
 
@@ -85,10 +72,6 @@
         .t-icon {
           font-size: 14px;
           margin-left: 4px;
-        }
-
-        &:hover {
-          cursor: pointer;
         }
       }
     }
@@ -115,14 +98,6 @@
 
     :deep(.t-checkbox__label) {
       color: var(--td-text-color-secondary);
-    }
-
-    span {
-      color: var(--td-brand-color);
-
-      &:hover {
-        cursor: pointer;
-      }
     }
   }
 
@@ -153,7 +128,6 @@
   .tip {
     font-size: 14px;
     color: var(--td-brand-color-8);
-    cursor: pointer;
     display: inline-flex;
     align-items: center;
     margin-right: 14px;

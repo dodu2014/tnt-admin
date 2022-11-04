@@ -3,10 +3,10 @@
     <t-col :flex="3">
       <div class="user-left-greeting">
         <div>
-          Hi，Image
+          Hi，{{ userInfo.name || userInfo.userName }}
           <span class="regular"> 下午好，今天是你加入鹅厂的第 100 天～</span>
         </div>
-        <img src="@/assets/assets-tencent-logo.png" class="logo" />
+        <!-- <img src="@/assets/assets-tencent-logo.png" class="logo" /> -->
       </div>
 
       <t-card class="user-info-list" title="个人信息">
@@ -93,7 +93,7 @@ import * as echarts from 'echarts/core'
 import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/components'
 import { LineChart } from 'echarts/charts'
 import { CanvasRenderer } from 'echarts/renderers'
-import { useSettingStore } from '@/store'
+import { getUserStore, useSettingStore } from '@/store'
 
 import { LAST_7_DAYS } from '@/utils/date'
 import { USER_INFO_LIST, TEAM_MEMBERS, PRODUCT_LIST } from './constants'
@@ -109,6 +109,7 @@ echarts.use([GridComponent, TooltipComponent, LineChart, CanvasRenderer, LegendC
 let lineContainer: HTMLElement
 let lineChart: echarts.ECharts
 const store = useSettingStore()
+const { userInfo } = getUserStore()
 const chartColors = computed(() => store.chartColors)
 
 const onLineChange = value => {

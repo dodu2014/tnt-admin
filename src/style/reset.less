@@ -69,3 +69,21 @@ a {
     margin-right: 0;
   }
 }
+
+// table 样式
+.t-table th,
+.t-table td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+// table small 样式
+.t-table.t-size-s th,
+.t-table.t-size-s td {
+  padding: 10px 7px;
+}
+
+// 解决 dialog 下的 form 验证时候出现滚动条的问题
+.t-dialog__body > .t-form,
+.t-dialog__body > form {
+  margin-bottom: 30px !important;
+}
